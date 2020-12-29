@@ -34,16 +34,6 @@ const SignUp = () => {
     }
   };
 
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    if (name === "password") {
-      setPassword(value);
-    }
-    if (name === "email") {
-      setEmail(value);
-    }
-  };
-
   return (
     <div className="sign-up">
       <h2>I do not have an account</h2>

@@ -23,24 +23,24 @@ const Page = ({
 function App() {
   const [user, setUser] = React.useState(null);
 
-  let unsubscribeFromAuth = null;
+  //let unsubscribeFromAuth = null;
+
+  async function fetchData(userAuth) {
+    if (userAuth) {
+      const userRef = await createUserProfileDocument(userAuth);
+      userRef.onSnapshot((snapShot) =>
+        setUser({ id: snapShot.id, ...snapShot.data() })
+      );
+    } else setUser(userAuth);
+  }
 
   React.useEffect(async () => {
-    unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-        userRef.onSnapshot((snapShot) =>
-          setUser({ id: snapShot.id, ...snapShot.data() })
-        );
-      } else setUser(userAuth);
-    });
+    auth.onAuthStateChanged(fetchData);
   }, [auth]);
 
-  useEffect(() => {
-    //return unsubscribeFromAuth();
-  }, []);
-
-  console.log(user);
+  // useEffect(() => {
+  //   return unsubscribeFromAuth();
+  // }, []);
 
   return (
     <div>
