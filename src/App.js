@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
@@ -25,16 +25,16 @@ function App() {
 
   //let unsubscribeFromAuth = null;
 
-  async function fetchData(userAuth) {
-    if (userAuth) {
-      const userRef = await createUserProfileDocument(userAuth);
-      userRef.onSnapshot((snapShot) =>
-        setUser({ id: snapShot.id, ...snapShot.data() })
-      );
-    } else setUser(userAuth);
-  }
-
   React.useEffect(async () => {
+    async function fetchData(userAuth) {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot((snapShot) =>
+          setUser({ id: snapShot.id, ...snapShot.data() })
+        );
+      } else setUser(userAuth);
+    }
+
     auth.onAuthStateChanged(fetchData);
   }, [auth]);
 
