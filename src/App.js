@@ -49,6 +49,7 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route path="/shop" component={ShopPage} />
         <Route path="/sign-in" component={SignInPage} />
+        <Route path="/:name" component={Page} />
       </Switch>
     </div>
   );
