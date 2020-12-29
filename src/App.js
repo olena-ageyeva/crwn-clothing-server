@@ -5,7 +5,10 @@ import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInPage from "./pages/sign-in-page/sign-in.component";
 import { Switch, Route } from "react-router-dom";
-import { auth } from "./components/firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+} from "./components/firebase/firebase.utils";
 
 const Page = ({
   match: {
@@ -22,15 +25,22 @@ function App() {
 
   let unsubscribeFromAuth = null;
 
-  React.useEffect(() => {
-    unsubscribeFromAuth = auth.onAuthStateChanged((user) => setUser(user));
+  React.useEffect(async () => {
+    unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot((snapShot) =>
+          setUser({ id: snapShot.id, ...snapShot.data() })
+        );
+      } else setUser(userAuth);
+    });
   }, [auth]);
 
   useEffect(() => {
     //return unsubscribeFromAuth();
   }, []);
 
-  console.log(auth.user, user);
+  console.log(user);
 
   return (
     <div>

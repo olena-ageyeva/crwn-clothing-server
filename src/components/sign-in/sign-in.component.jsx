@@ -6,8 +6,8 @@ import { signInWithGoogle } from "../firebase/firebase.utils";
 import "./sign-in.styles.scss";
 
 const SignIn = () => {
-  const [email, setEmail] = React.useState("email");
-  const [password, setPassword] = React.useState("password");
+  const [email, setEmail] = React.useState(" ");
+  const [password, setPassword] = React.useState(" ");
 
   const handleSubmit = (event) => {
     event.preventDefault();
