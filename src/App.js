@@ -25,22 +25,18 @@ function App() {
 
   //let unsubscribeFromAuth = null;
 
-  React.useEffect(async () => {
-    async function fetchData(userAuth) {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-        userRef.onSnapshot((snapShot) =>
-          setUser({ id: snapShot.id, ...snapShot.data() })
-        );
-      } else setUser(userAuth);
-    }
+  const onAuthChange = React.useCallback(async (userAuth) => {
+    if (userAuth) {
+      const userRef = await createUserProfileDocument(userAuth);
+      userRef.onSnapshot((snapShot) =>
+        setUser({ id: snapShot.id, ...snapShot.data() })
+      );
+    } else setUser(userAuth);
+  }, []);
 
-    auth.onAuthStateChanged(fetchData);
-  }, [auth]);
-
-  // useEffect(() => {
-  //   return unsubscribeFromAuth();
-  // }, []);
+  React.useEffect(() => {
+    auth.onAuthStateChanged(onAuthChange);
+  }, [onAuthChange]);
 
   return (
     <div>
