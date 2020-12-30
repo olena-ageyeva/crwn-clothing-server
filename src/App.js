@@ -29,14 +29,17 @@ function App() {
   //let unsubscribeFromAuth = null;
   console.log("store user", user);
 
-  const onAuthChange = React.useCallback(async (userAuth) => {
-    if (userAuth) {
-      const userRef = await createUserProfileDocument(userAuth);
-      userRef.onSnapshot((snapShot) =>
-        dispatch(setCurrentUser({ id: snapShot.id, ...snapShot.data() }))
-      );
-    } else dispatch(setCurrentUser(userAuth));
-  }, []);
+  const onAuthChange = React.useCallback(
+    async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot((snapShot) =>
+          dispatch(setCurrentUser({ id: snapShot.id, ...snapShot.data() }))
+        );
+      } else dispatch(setCurrentUser(userAuth));
+    },
+    [dispatch]
+  );
 
   React.useEffect(() => {
     auth.onAuthStateChanged(onAuthChange);
