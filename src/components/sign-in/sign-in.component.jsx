@@ -6,8 +6,8 @@ import { auth, signInWithGoogle } from "../firebase/firebase.utils";
 import "./sign-in.styles.scss";
 
 const SignIn = () => {
-  const [email, setEmail] = React.useState(" ");
-  const [password, setPassword] = React.useState(" ");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,16 +21,6 @@ const SignIn = () => {
     }
   };
 
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    if (name === "password") {
-      setPassword(value);
-    }
-    if (name === "email") {
-      setEmail(value);
-    }
-  };
-
   return (
     <div className="sign-in">
       <h2>I already have an account</h2>
@@ -41,14 +31,14 @@ const SignIn = () => {
           name="email"
           value={email}
           required
-          onChange={handleChange}
+          onChange={(event) => setEmail(event.target.value)}
           label="email"
         />
         <FormInput
           type="password"
           name="password"
           value={password}
-          onChange={handleChange}
+          onChange={(event) => setPassword(event.target.value)}
           label="password"
           required
         />
