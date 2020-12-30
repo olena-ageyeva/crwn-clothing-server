@@ -24,6 +24,7 @@ const Page = ({
 
 function App() {
   const user = useSelector(({ user }) => user.currentUser);
+
   const dispatch = useDispatch();
 
   //let unsubscribeFromAuth = null;
