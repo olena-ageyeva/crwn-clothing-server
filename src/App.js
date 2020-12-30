@@ -9,6 +9,8 @@ import {
   auth,
   createUserProfileDocument,
 } from "./components/firebase/firebase.utils";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentUser } from "./store/user/user.actions";
 
 const Page = ({
   match: {
@@ -21,17 +23,20 @@ const Page = ({
 );
 
 function App() {
-  const [user, setUser] = React.useState(null);
+  //const [user, setUser] = React.useState(null);
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
 
   //let unsubscribeFromAuth = null;
+  console.log("store user", user);
 
   const onAuthChange = React.useCallback(async (userAuth) => {
     if (userAuth) {
       const userRef = await createUserProfileDocument(userAuth);
       userRef.onSnapshot((snapShot) =>
-        setUser({ id: snapShot.id, ...snapShot.data() })
+        dispatch(setCurrentUser({ id: snapShot.id, ...snapShot.data() }))
       );
-    } else setUser(userAuth);
+    } else dispatch(setCurrentUser(userAuth));
   }, []);
 
   React.useEffect(() => {
