@@ -7,10 +7,12 @@ import { ReactComponent as Logo } from "../../assets/crown.svg";
 import { useSelector } from "react-redux";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import { selectCurrentUser } from "../../store/user/user.reducer";
+import { selectCartHidden } from "../../store/cart/cart.reducer";
 
 const Header = () => {
-  const user = useSelector((state) => state.user.currentUser);
-  const hidden = useSelector(({ cart }) => cart.hidden);
+  const user = useSelector(selectCurrentUser);
+  const hidden = useSelector(selectCartHidden);
 
   return (
     <div className="header">

@@ -11,6 +11,7 @@ import {
 } from "./components/firebase/firebase.utils";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "./store/user/user.actions";
+import { selectCurrentUser } from "./store/user/user.reducer";
 
 const Page = ({
   match: {
@@ -23,7 +24,7 @@ const Page = ({
 );
 
 function App() {
-  const user = useSelector(({ user }) => user.currentUser);
+  const user = useSelector(selectCurrentUser);
 
   const dispatch = useDispatch();
 
