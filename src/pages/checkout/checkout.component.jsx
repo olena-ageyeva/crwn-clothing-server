@@ -4,6 +4,7 @@ import {
   selectCartItems,
   selectCartTotal,
 } from "../../store/cart/cart.reducer";
+import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 
 import "./checkout.styles.scss";
 
@@ -29,7 +30,9 @@ const CheckoutPage = () => {
           <span>Remove</span>
         </div>
       </div>
-      {cartItems.map((item) => item.name)}
+      {cartItems.map((item) => (
+        <CheckoutItem {...item} />
+      ))}
       <div className="total">
         <span>TOTAL ${total}</span>
       </div>
