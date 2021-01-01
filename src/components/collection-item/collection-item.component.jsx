@@ -1,16 +1,13 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem } from "../../store/cart/cart.actions";
-import { selectSections } from "../../store/directory/directory.reducer";
-
 
 import CustomButton from "../custom-button/custom-button.component";
 import "./collection-item.styles.scss";
 
-const CollectionItem = ({item}) => {
+const CollectionItem = ({ item }) => {
   const { name, price, imageUrl } = item;
   const dispatch = useDispatch();
-  const collection = useSelector(selectSections)
 
   return (
     <div className="collection-item">

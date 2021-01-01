@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CollectionItem from "../../components/collection-item/collection-item.component";
 import { selectCollection } from "../../store/shop/shop.reducer";
 
