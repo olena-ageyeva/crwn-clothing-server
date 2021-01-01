@@ -17,4 +17,6 @@ export const store = createStore(
 
 export const persistor = persistStore(store);
 
-export default { store, persistor };
+const persistedStore = { store, persistor };
+
+export default persistedStore;
