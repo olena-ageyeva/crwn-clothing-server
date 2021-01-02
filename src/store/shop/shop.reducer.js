@@ -1,13 +1,15 @@
-import { initialCollection } from "./shop.data";
 import { createSelector } from "reselect";
 import memoize from "lodash.memoize";
+import { ShopActionTypes } from "./shop.types.js";
 
 const INITIAL_STATE = {
-  collections: initialCollection,
+  collections: null,
 };
 
 const shopReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case ShopActionTypes.UPDATE_COLLECTIONS:
+      return { ...state, collections: action.payload };
     default:
       return state;
   }
@@ -22,7 +24,8 @@ export const selectCollections = createSelector(
 
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
-  (collections) => Object.keys(collections).map((key) => collections[key])
+  (collections) =>
+    collections ? Object.keys(collections).map((key) => collections[key]) : []
 );
 
 export const selectCollection = memoize((collectionId) =>

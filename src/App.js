@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
@@ -32,7 +32,7 @@ function App() {
   //let unsubscribeFromAuth = null;
   console.log("store user", user);
 
-  const onAuthChange = React.useCallback(
+  const onAuthChange = useCallback(
     async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
@@ -44,7 +44,7 @@ function App() {
     [dispatch]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     auth.onAuthStateChanged(onAuthChange);
   }, [onAuthChange]);
 
