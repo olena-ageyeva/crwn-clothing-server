@@ -5,14 +5,14 @@ import { selectCollection } from "../../store/shop/shop.reducer";
 
 import "./collection.styles.scss";
 
-const CategoryPage = ({ match }) => {
+const CollectionPage = ({ match }) => {
   const collection = useSelector(selectCollection(match.params.collectionId));
   console.log("collection", collection);
   return (
     <div className="collection-page">
-      <h2 className="title">{collection.title} </h2>
+      <h2 className="title">{collection?.title} </h2>
       <div className="items">
-        {collection.items.map((item) => (
+        {collection?.items?.map((item) => (
           <CollectionItem key={item.id} item={item} />
         ))}
       </div>
@@ -20,4 +20,4 @@ const CategoryPage = ({ match }) => {
   );
 };
 
-export default CategoryPage;
+export default CollectionPage;
