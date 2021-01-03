@@ -8,7 +8,6 @@ import {
   firestore,
   convertCollectionsSnapshotToMap,
 } from "../../components/firebase/firebase.utils";
-import CollectionOverview from "../../components/collections-overview/collections-overview.component";
 import CollectionPage from "../collection/collection.component";
 import CollectionsOverview from "../../components/collections-overview/collections-overview.component";
 
