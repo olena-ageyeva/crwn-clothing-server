@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { updateCollections } from "../../store/shop/shop.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCollectionsStartAsync } from "../../store/shop/shop.actions";
+import {
+  selectCollection,
+  selectIsCollectionFetching,
+} from "../../store/shop/shop.reducer";
 import WithSpinner from "../../components/with-spinner/with-spinner.components";
 
-import {
-  firestore,
-  convertCollectionsSnapshotToMap,
-} from "../../components/firebase/firebase.utils";
 import CollectionPage from "../collection/collection.component";
 import CollectionsOverview from "../../components/collections-overview/collections-overview.component";
 
@@ -15,22 +15,15 @@ const CollectionOverviewWithSpinner = WithSpinner(CollectionsOverview);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
 const ShopPage = ({ match }) => {
-  const [isLoading, setIsLoading] = useState(true);
-
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsCollectionFetching);
 
-  const onCollectionChange = useCallback(async () => {
-    const collectionRef = firestore.collection("collections");
-    collectionRef.get().then((snapShot) => {
-      const collectionMap = convertCollectionsSnapshotToMap(snapShot);
-      dispatch(updateCollections(collectionMap));
-      setIsLoading(false);
-    });
-  }, [dispatch]);
+  const collections = useSelector(selectCollection);
+  console.log("collections", collections, isLoading)
 
   useEffect(() => {
-    onCollectionChange();
-  }, [onCollectionChange]);
+    dispatch(fetchCollectionsStartAsync());
+  }, [dispatch]);
 
   return (
     <div className="shop-page">
