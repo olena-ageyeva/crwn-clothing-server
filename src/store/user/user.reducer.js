@@ -1,4 +1,4 @@
-import { UserActionTypes } from "./user.types";
+import UserActionTypes from "./user.types";
 import { createSelector } from "reselect";
 
 const INITIAL_STATE = {
@@ -7,8 +7,14 @@ const INITIAL_STATE = {
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UserActionTypes.SET_CURRENT_USER:
-      return { ...state, currentUser: action.payload };
+    case UserActionTypes.SIGN_IN_SUCCESS:
+      return {
+        ...state,
+        currentUser: action.payload,
+        error: null,
+      };
+    case UserActionTypes.SIGN_IN_FAILURE:
+      return { ...state, error: action.payload };
     default:
       return state;
   }
@@ -20,7 +26,5 @@ export const selectCurrentUser = createSelector(
   [selectUser],
   (user) => user.currentUser
 );
-
-
 
 export default userReducer;

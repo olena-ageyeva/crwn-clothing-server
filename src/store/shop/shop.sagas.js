@@ -3,7 +3,7 @@ import { ShopActionTypes } from "./shop.types.js";
 import {
   firestore,
   convertCollectionsSnapshotToMap,
-} from "../../components/firebase/firebase.utils";
+} from "../../firebase/firebase.utils";
 
 import {
   fetchCollectionsSuccess,

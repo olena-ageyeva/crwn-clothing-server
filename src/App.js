@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React from "react";
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
@@ -6,12 +6,8 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 import Header from "./components/header/header.component";
 import SignInPage from "./pages/sign-in-page/sign-in.component";
 import { Switch, Route, Redirect } from "react-router-dom";
-import {
-  auth,
-  createUserProfileDocument,
-} from "./components/firebase/firebase.utils";
-import { useSelector, useDispatch } from "react-redux";
-import { setCurrentUser } from "./store/user/user.actions";
+import { useSelector } from "react-redux";
+
 import { selectCurrentUser } from "./store/user/user.reducer";
 
 const Page = ({
@@ -26,27 +22,6 @@ const Page = ({
 
 function App() {
   const user = useSelector(selectCurrentUser);
-
-  const dispatch = useDispatch();
-
-  //let unsubscribeFromAuth = null;
-  console.log("store user", user);
-
-  const onAuthChange = useCallback(
-    async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-        userRef.onSnapshot((snapShot) =>
-          dispatch(setCurrentUser({ id: snapShot.id, ...snapShot.data() }))
-        );
-      } else dispatch(setCurrentUser(userAuth));
-    },
-    [dispatch]
-  );
-
-  useEffect(() => {
-    auth.onAuthStateChanged(onAuthChange);
-  }, [onAuthChange]);
 
   return (
     <div>
