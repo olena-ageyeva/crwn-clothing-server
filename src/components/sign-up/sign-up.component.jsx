@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
@@ -8,10 +8,15 @@ import { signUpStart } from "../../store/user/user.actions";
 
 const SignUp = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = React.useState(" ");
-  const [password, setPassword] = React.useState(" ");
-  const [displayName, setDisplayName] = React.useState(" ");
-  const [confirmPassword, setConfirmPassword] = React.useState(" ");
+  const INITIAL_STATE = {
+    email: "",
+    password: "",
+    confirmPassword: "",
+    displayName: "",
+  };
+  const [userCredentials, setUserCredentials] = useState(INITIAL_STATE);
+
+  const { email, password, confirmPassword, displayName } = userCredentials;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,13 +26,15 @@ const SignUp = () => {
     }
     try {
       dispatch(signUpStart({ email, password, displayName }));
-      setDisplayName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
+      setUserCredentials(INITIAL_STATE);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserCredentials({ ...userCredentials, [name]: value });
   };
 
   return (
@@ -40,7 +47,7 @@ const SignUp = () => {
           name="displayName"
           value={displayName}
           required
-          onChange={(e) => setDisplayName(e.target.value)}
+          onChange={handleChange}
           label="Display Name"
         />
         <FormInput
@@ -48,22 +55,22 @@ const SignUp = () => {
           name="email"
           value={email}
           required
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange}
           label="Email"
         />
         <FormInput
           type="password"
           name="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange}
           label="Password"
           required
         />
         <FormInput
           type="password"
-          name="password"
+          name="confirmPassword"
           value={password}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={handleChange}
           label="Confirm password"
           required
         />

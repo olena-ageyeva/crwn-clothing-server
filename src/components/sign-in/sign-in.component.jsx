@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
@@ -10,14 +10,22 @@ import {
 import "./sign-in.styles.scss";
 
 const SignIn = () => {
+  const [userCredentials, setUserCredentials] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = userCredentials;
   const dispatch = useDispatch();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("email/password", email, password);
-    dispatch(emailSignInStart({ email, password }));
+    dispatch(emailSignInStart(userCredentials));
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserCredentials({ ...userCredentials, [name]: value });
   };
 
   return (
@@ -30,14 +38,14 @@ const SignIn = () => {
           name="email"
           value={email}
           required
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={handleChange}
           label="email"
         />
         <FormInput
           type="password"
           name="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={handleChange}
           label="password"
           required
         />
