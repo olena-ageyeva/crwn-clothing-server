@@ -7,7 +7,7 @@ import "./collection.styles.scss";
 
 const CollectionPage = ({ match }) => {
   const collection = useSelector(selectCollection(match.params.collectionId));
-  console.log("collection", collection);
+
   return (
     <div className="collection-page">
       <h2 className="title">{collection?.title} </h2>
